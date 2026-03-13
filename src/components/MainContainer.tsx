@@ -3,15 +3,26 @@ import { Character } from "@/types/swapi";
 import { NavBar } from "./NavBar"
 import Image from "next/image";
 import { CharacterCard } from "./CharacterCard";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
-import { Search } from "lucide-react";
+import { SearchInput } from "./SearchInput";
 
-export const MainContainer = async() => {
+interface MainContainerProps {
+    searchParams: Promise<{ q?: string }>;
+}
+
+export const MainContainer = async ({ searchParams }: MainContainerProps) => {
+    
+    const resolvedParams = await searchParams; 
+    const query = resolvedParams.q;
+    
     let characters:Character[] = [];
     let error = null;
 
     try{
-        characters = await swapiService.getCharacters();
+        if (query){
+            characters = await swapiService.searchCharacters(query);
+        }else{
+            characters = await swapiService.getCharacters();
+        }
     }catch (e) {
         error = "Não foi possível carregar os personagens. Tente novamente mais tarde.";
     }
@@ -40,12 +51,7 @@ export const MainContainer = async() => {
             <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <header className="mb-12 text-center">
                     <div className="flex w-full justify-center">
-                        <InputGroup className="max-w-xs">
-                            <InputGroupInput placeholder="Procurar Personagem" />
-                            <InputGroupAddon>
-                                <Search/>
-                            </InputGroupAddon>
-                        </InputGroup>
+                        <SearchInput />
                     </div>
                 </header>
                 {error ? (
