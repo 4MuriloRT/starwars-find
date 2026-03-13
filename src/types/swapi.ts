@@ -9,6 +9,7 @@ export interface Character {
     mass: string;
     homeworld: string;
     species: string[];
+    films: string[];
 }
 
 export interface Planet {
@@ -17,6 +18,7 @@ export interface Planet {
     terrain: string;
     population: string;
     diameter: string;
+    films: string[];
 }
 
 export interface Vehicle {
@@ -25,6 +27,7 @@ export interface Vehicle {
     manufacturer: string;
     cost_in_credits: string;
     length: string;
+    films: string[];
 }
 
 export type SwapiItem = Character & Partial<Planet> & Partial<Vehicle>;
