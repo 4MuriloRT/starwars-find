@@ -38,9 +38,32 @@ export const CharacterCard = ({item}: CharacterCardProps) => {
                     <div className="grid gap-6 py-4">
                         <section>
                             <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-500 mb-3">
-                                {item.model ? "Especificações do Veículo" : "Informações Biológicas"}
+                                {item.model ? "Especificações do Veículo" : item.climate ? "Dados Planetários" : "Informações Biológicas"}
                             </h3>
-                            {item.model ? (
+                            {item.climate ? (
+                                <>
+                                    <div>
+                                        <p className="text-zinc-500">Clima</p>
+                                        <p className="text-zinc-200 font-medium">{item.climate}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-500">Gravidade</p>
+                                        <p className="text-zinc-200 font-medium">{item.gravity || 'N/A'}</p>
+                                    </div>
+                                    <div className="col-span-2">
+                                        <p className="text-zinc-500">Terreno</p>
+                                        <p className="text-zinc-200 font-medium">{item.terrain}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-500">População</p>
+                                        <p className="text-zinc-200 font-medium">{item.population}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-zinc-500">Diâmetro</p>
+                                        <p className="text-zinc-200 font-medium">{item.diameter}km</p>
+                                    </div>
+                                </>
+                            ) : item.model ? (
                                 <>
                                     <div className="col-span-2">
                                         <p className="text-zinc-500">Modelo</p>

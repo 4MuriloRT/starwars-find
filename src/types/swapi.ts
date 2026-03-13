@@ -18,6 +18,7 @@ export interface Planet {
     terrain: string;
     population: string;
     diameter: string;
+    gravity: string;
     films: string[];
 }
 

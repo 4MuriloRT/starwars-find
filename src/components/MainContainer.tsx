@@ -62,11 +62,18 @@ export const MainContainer = async ({ searchParams }: MainContainerProps) => {
                     <div className="text-center text-red-500 font-bold p-10 bg-zinc-900 rounded-lg">
                         {error}
                     </div>
-                ): (
+                ) : items.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {items.map((item) => (
                             <CharacterCard key={item.name} item={item} />
                         ))}
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center p-20 bg-zinc-900/30 rounded-xl border border-dashed border-zinc-800">
+                        <p className="text-xl text-zinc-500 font-medium">
+                            {category === 'people' ? 'Personagem' : category === 'vehicles' ? 'Veículo' : 'Planeta'} não encontrado.
+                        </p>
+                        <p className="text-sm text-zinc-600 mt-2">Tente procurar por outro nome ou termo.</p>
                     </div>
                 )}
             </main>
