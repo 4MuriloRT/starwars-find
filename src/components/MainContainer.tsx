@@ -1,4 +1,5 @@
 import { swapiService } from "@/services/swapi"
+import { Character } from "@/types/swapi";
 import { NavBar } from "./NavBar"
 import Image from "next/image";
 import { CharacterCard } from "./CharacterCard";
@@ -6,7 +7,14 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Search } from "lucide-react";
 
 export const MainContainer = async() => {
-    const characters = await swapiService.getCharacters();
+    let characters:Character[] = [];
+    let error = null;
+
+    try{
+        characters = await swapiService.getCharacters();
+    }catch (e) {
+        error = "Não foi possível carregar os personagens. Tente novamente mais tarde.";
+    }
     
     return (
         <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
@@ -40,11 +48,17 @@ export const MainContainer = async() => {
                         </InputGroup>
                     </div>
                 </header>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {characters.map((person) => (
-                        <CharacterCard key={person.name} person={person} />
-                    ))}
-                </div>
+                {error ? (
+                    <div className="text-center text-red-500 font-bold p-10 bg-zinc-900 rounded-lg">
+                        {error}
+                    </div>
+                ): (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {characters.map((person) => (
+                            <CharacterCard key={person.name} person={person} />
+                        ))}
+                    </div>
+                )}
             </main>
         </div>
     )

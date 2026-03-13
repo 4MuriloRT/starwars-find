@@ -15,7 +15,9 @@ export const swapiService = {
             }
 
             const data = await res.json();
-            return data.results;
+
+            const shuffled = data.results.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, 8);
 
         }catch (error){
             console.error("Erro ao buscar personagens:", error);
