@@ -1,23 +1,24 @@
-import { Character } from "@/types/swapi"
+import { SwapiItem } from "@/types/swapi"
 
-export const CharacterCard = ({person}: {person:Character}) => {
+interface CharacterCardProps{
+    item: SwapiItem;
+}
+
+export const CharacterCard = ({item}: CharacterCardProps) => {
     return(
-        <div className="bg-[#1a1a1a] border border-zinc-800 rounded-xl p-6 hover:border-yellow-500 transition-colors group">
-        <div className="flex justify-between items-start mb-4">
-            <h2 className="text-xl font-bold text-white group-hover:text-yellow-400">{person.name}</h2>
-            <span className="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">
-            {person.birth_year}
-            </span>
-        </div>
-        
-        <div className="space-y-2 text-sm text-zinc-400">
-            <p><span className="text-zinc-500">Gênero:</span> {person.gender}</p>
-            <p><span className="text-zinc-500">Altura:</span> {person.height}cm</p>
-        </div>
-        
-        <button className="mt-6 w-full py-2 bg-zinc-800 hover:bg-yellow-600 hover:text-black text-white font-medium rounded-lg transition-all">
-            Ver Detalhes
-        </button>
+        <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-xl hover:border-yellow-400 transition-colors group">
+            <h2 className="text-xl font-bold mb-4 group-hover:text-yellow-400">{item.name}</h2>
+            
+            <div className="space-y-2 text-sm text-zinc-400">
+                {item.gender && <p><span className="font-semibold">Gênero:</span> {item.gender}</p>}
+                {item.eye_color && <p><span className="font-semibold">Olhos:</span> {item.eye_color}</p>}
+                
+                {item.climate && <p><span className="font-semibold">Clima:</span> {item.climate}</p>}
+                {item.terrain && <p><span className="font-semibold">Terreno:</span> {item.terrain}</p>}
+                
+                {item.model && <p><span className="font-semibold">Modelo:</span> {item.model}</p>}
+                {item.manufacturer && <p><span className="font-semibold">Fabricante:</span> {item.manufacturer}</p>}
+            </div>
         </div>
     );
 }

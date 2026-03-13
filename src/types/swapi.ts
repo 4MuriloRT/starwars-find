@@ -11,6 +11,20 @@ export interface Character {
     species: string[];
 }
 
-export interface SwaipResponse {
-    results: Character[];
+export interface Planet {
+    name: string;
+    climate: string;
+    terrain: string;
+    population: string;
+    diameter: string;
 }
+
+export interface Vehicle {
+    name: string;
+    model: string;
+    manufacturer: string;
+    cost_in_credits: string;
+    length: string;
+}
+
+export type SwapiItem = Character & Partial<Planet> & Partial<Vehicle>;

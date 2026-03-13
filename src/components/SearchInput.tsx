@@ -24,7 +24,7 @@ export const SearchInput = () => {
     };
 
     return(
-        <InputGroup>
+        <InputGroup className="mb-10">
             <InputGroupInput
                 placeholder="Procurar Personagem"
                 defaultValue={searchParams.get('q')?.toString()}

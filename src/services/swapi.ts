@@ -38,5 +38,24 @@ export const swapiService = {
             console.error("Erro na busca:", error);
             throw new Error("Erro ao pesquisar personagem.");
         }   
+    },
+
+    async getByType(type: string, query?: string): Promise<any[]> {
+        try{
+            const endpoint = query
+                ? `${BASE_URL}/${type}/?search=${query}`
+                : `${BASE_URL}/${type}/`;
+            const res = await fetch(endpoint, {
+                next: { revalidate: 3600 }
+            });
+
+            if(!res.ok) throw new Error(`Erro HTTP: ${res.status}`);
+
+            const data = await res.json();
+            return data.results;
+        }catch (error){
+            console.error(`Erro ao buscar ${type}:`, error);
+            throw new Error(`Erro ao carregar ${type} da SWAPI.`);
+        }
     }
 }

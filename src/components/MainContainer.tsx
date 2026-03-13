@@ -1,30 +1,34 @@
 import { swapiService } from "@/services/swapi"
-import { Character } from "@/types/swapi";
-import { NavBar } from "./NavBar"
 import Image from "next/image";
 import { CharacterCard } from "./CharacterCard";
 import { SearchInput } from "./SearchInput";
+import { SwapiItem } from "@/types/swapi";
+import { NavBar } from "./NavBar";
 
 interface MainContainerProps {
-    searchParams: Promise<{ q?: string }>;
+    searchParams: Promise<{
+        q?: string;
+        category?: string;
+    }>;
 }
 
 export const MainContainer = async ({ searchParams }: MainContainerProps) => {
     
     const resolvedParams = await searchParams; 
     const query = resolvedParams.q;
+    const category = resolvedParams.category || 'people';
     
-    let characters:Character[] = [];
+    let items: SwapiItem[] = [];
     let error = null;
 
     try{
-        if (query){
-            characters = await swapiService.searchCharacters(query);
-        }else{
-            characters = await swapiService.getCharacters();
+        items = await swapiService.getByType(category, query);
+
+        if (!query && category === 'people'){
+            items = items.sort(() => 0.5 - Math.random()).slice(0, 8);
         }
     }catch (e) {
-        error = "Não foi possível carregar os personagens. Tente novamente mais tarde.";
+        error = "Não foi possível carregar os dados. Tente novamente mais tarde.";
     }
     
     return (
@@ -49,7 +53,7 @@ export const MainContainer = async ({ searchParams }: MainContainerProps) => {
                 />
             </div>
             <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <header className="mb-12 text-center">
+                <header className="text-center">
                     <div className="flex w-full justify-center">
                         <SearchInput />
                     </div>
@@ -60,8 +64,8 @@ export const MainContainer = async ({ searchParams }: MainContainerProps) => {
                     </div>
                 ): (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {characters.map((person) => (
-                            <CharacterCard key={person.name} person={person} />
+                        {items.map((item) => (
+                            <CharacterCard key={item.name} item={item} />
                         ))}
                     </div>
                 )}
