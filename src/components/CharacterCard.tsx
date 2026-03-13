@@ -17,7 +17,7 @@ interface CharacterCardProps{
 export const CharacterCard = ({item}: CharacterCardProps) => {
     return(
         <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl hover:border-yellow-400 transition-colors group">
-            <h2 className="text-xl font-bold mb-2 group-hover:text-yellow-400">
+            <h2 className="text-xl font-bold mb-2 group-hover:text-yellow-400 truncate capitalize">
                 {item.name}
             </h2>
             

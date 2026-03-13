@@ -54,9 +54,12 @@ export const MainContainer = async ({ searchParams }: MainContainerProps) => {
             </div>  
             <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <header className="mb-8 text-center">
-                    <div className="flex w-full justify-center">
+                    <div className="flex w-full justify-center flex-col items-center gap-4">
+                        <p className="text-zinc-500 text-sm uppercase tracking-widest font-bold">
+                            Pesquisando por: <span className="text-yellow-400">{category === 'people' ? 'Personagens' : category === 'vehicles' ? 'Veículos' : 'Planetas'}</span>
+                        </p>
                         <div className="w-full max-w-sm">
-                            <SearchInput />
+                            <SearchInput category={category} />
                         </div>
                     </div>
                 </header>

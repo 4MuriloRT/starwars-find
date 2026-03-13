@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 export const NavBar = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const currentCategory = searchParams.get('category') || 'people';
     
     const handleCategoryChange = (category: string) => {
         const params = new URLSearchParams(searchParams);
@@ -27,16 +28,23 @@ export const NavBar = () => {
                     />
             </div>
             <div className="flex w-full justify-center">
-                <Menubar className="flex w-auto mt-5 justify-center bg-zinc-900 border-zinc-800">
-                    <MenubarMenu>
-                        <MenubarTrigger onClick={() => handleCategoryChange('people')}>Personagens</MenubarTrigger>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger onClick={() => handleCategoryChange('vehicles')}>Veículos</MenubarTrigger>
-                    </MenubarMenu>
-                    <MenubarMenu>
-                        <MenubarTrigger onClick={() => handleCategoryChange('planets')}>Planetas</MenubarTrigger>
-                    </MenubarMenu>
+                <Menubar className="flex w-auto mt-5 justify-center bg-black/60 backdrop-blur-md border border-zinc-800 p-1 rounded-full px-2 gap-1">
+                    {['people', 'vehicles', 'planets'].map((cat) => (
+                        <MenubarMenu key={cat}>
+                            <MenubarTrigger 
+                                onClick={() => handleCategoryChange(cat)}
+                                className={`
+                                    px-6 py-2 rounded-full text-xs font-bold uppercase tracking-tighter transition-all
+                                    ${currentCategory === cat 
+                                        ? "bg-yellow-400 text-black shadow-[0_0_15px_rgba(250,204,21,0.4)]" 
+                                        : "text-zinc-500 hover:text-white hover:bg-zinc-800"}
+                                    focus:outline-none border-none
+                                `}
+                            >
+                                {cat === 'people' ? 'Personagens' : cat === 'vehicles' ? 'Veículos' : 'Planetas'}
+                            </MenubarTrigger>
+                        </MenubarMenu>
+                    ))}
                 </Menubar>
             </div>
         </header>

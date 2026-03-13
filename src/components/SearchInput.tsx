@@ -5,7 +5,11 @@ import { useTransition } from "react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Loader2, Search } from "lucide-react";
 
-export const SearchInput = () => {
+interface SearchInputProps {
+    category: string;
+}
+
+export const SearchInput = ({ category }: SearchInputProps) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
@@ -23,12 +27,20 @@ export const SearchInput = () => {
         });
     };
 
+    const getPlaceholder = () => {
+        if (category === 'people') return "Procurar Personagem...";
+        if (category === 'vehicles') return "Procurar Veículo...";
+        if (category === 'planets') return "Procurar Planeta...";
+        return "Procurar...";
+    };
+
     return(
         <InputGroup className="mb-10">
             <InputGroupInput
-                placeholder="Procurar Personagem"
+                placeholder={getPlaceholder()}
                 defaultValue={searchParams.get('q')?.toString()}
                 onChange={(e) => handleSearch(e.target.value)}
+                className="capitalize"
             />
             <InputGroupAddon>
                 {isPending ? <Loader2 className="animate-spin"/> : <Search/>}
