@@ -43,7 +43,11 @@ export const SearchInput = ({ category }: SearchInputProps) => {
                 className="capitalize"
             />
             <InputGroupAddon>
-                {isPending ? <Loader2 className="animate-spin"/> : <Search/>}
+                {isPending ? (
+                    <Loader2 className="animate-spin text-yellow-400" size={18} /> 
+                ) : (
+                    <Search size={18} />
+                )}
             </InputGroupAddon>
         </InputGroup>
     );
