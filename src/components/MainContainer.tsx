@@ -25,7 +25,7 @@ export const MainContainer = async ({ searchParams }: MainContainerProps) => {
         items = await swapiService.getByType(category, query);
 
         if (!query && category === 'people'){
-            items = items.sort(() => 0.5 - Math.random()).slice(0, 8);
+            items = [...items].sort(() => 0.5 - Math.random()).slice(0, 8);
         }
     }catch (e) {
         error = "Não foi possível carregar os dados. Tente novamente mais tarde.";
@@ -34,28 +34,30 @@ export const MainContainer = async ({ searchParams }: MainContainerProps) => {
     return (
         <div className="min-h-screen bg-black text-white relative overflow-x-hidden">
             <NavBar />
-            <div className="hidden xl:block fixed left-0 bottom-0 z-0 opacity-50 hover:opacity-100 transition-opacity">
+            <div className="hidden xl:flex fixed left-0 top-0 bottom-0 items-center z-0 opacity-40 hover:opacity-100 transition-opacity pointer-events-none">
                 <Image 
                     src="/vader.png" 
                     alt="Vader" 
-                    width={400} 
-                    height={600} 
-                    className="object-contain"
+                    width={450} 
+                    height={700} 
+                    className="object-contain translate-x-[-10%]" 
                 />
             </div>
-            <div className="hidden xl:block fixed right-0 bottom-0 z-0 opacity-50 hover:opacity-100 transition-opacity">
+            <div className="hidden xl:flex fixed right-0 top-0 bottom-0 items-center z-0 opacity-40 hover:opacity-100 transition-opacity pointer-events-none">
                 <Image 
                     src="/obi-wan.png" 
                     alt="Obi-Wan" 
-                    width={400} 
-                    height={600} 
-                    className="object-contain"
+                    width={450} 
+                    height={700} 
+                    className="object-contain translate-x-[10%]"
                 />
-            </div>
+            </div>  
             <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <header className="text-center">
+                <header className="mb-8 text-center">
                     <div className="flex w-full justify-center">
-                        <SearchInput />
+                        <div className="w-full max-w-sm">
+                            <SearchInput />
+                        </div>
                     </div>
                 </header>
                 {error ? (
