@@ -1,9 +1,9 @@
-import {MainContainer} from "@/components/MainContainer";
+import { MainContainer } from "@/components/MainContainer";
 
-export default function Home({
-  searchParams,
-}: {
+interface PageProps {
   searchParams: Promise<{ q?: string; category?: string }>;
-}) {
+}
+
+export default function Home({ searchParams }: PageProps) {
   return <MainContainer searchParams={searchParams} />;
 }
