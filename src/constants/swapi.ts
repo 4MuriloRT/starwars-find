@@ -11,3 +11,18 @@ export const getFilmTitle = (url: string) => {
     const id = url.split("/").filter(Boolean).pop();
     return id ? FILM_NAMES[id] || `Episode ${id}` : "Unknown Film";
 };
+
+export const PLANET_NAMES: Record<string, string> = {
+    "1": "Tatooine",
+    "2": "Alderaan",
+    "7": "Endor",
+    "8": "Naboo",
+    "9": "Coruscant",
+    "10": "Kamino",
+};
+
+export const getPlanetName = (url?: string) => {
+    if(!url) return "Desconhecido";
+    const id = url.split("/").filter(Boolean).pop();
+    return id ? PLANET_NAMES[id] || `Sistema ${id}` : "Desconhecido";
+}
