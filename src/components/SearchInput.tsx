@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { Suspense, useTransition } from "react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { Loader2, Search } from "lucide-react";
 
@@ -9,7 +9,7 @@ interface SearchInputProps {
     category: string;
 }
 
-export const SearchInput = ({ category }: SearchInputProps) => {
+export const SearchInputContent = ({ category }: SearchInputProps) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
@@ -50,5 +50,13 @@ export const SearchInput = ({ category }: SearchInputProps) => {
                 )}
             </InputGroupAddon>
         </InputGroup>
+    );
+}
+
+export const SearchInput = ({ category }: SearchInputProps) => {
+    return (
+        <Suspense fallback={<div className=" h-10 w-full animate-pulse bg-zinc-800 rounded-md" />}>
+            <SearchInputContent category={category} />
+        </Suspense>
     );
 }

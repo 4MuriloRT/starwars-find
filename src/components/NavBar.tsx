@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { Menubar, MenubarMenu, MenubarTrigger } from "./ui/menubar";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export const NavBar = () => {
+export const NavBarContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const currentCategory = searchParams.get('category') || 'people';
@@ -19,13 +20,13 @@ export const NavBar = () => {
     return(
         <header className="top-0 left-0 right-0 z-40">
             <div className="flex items-center mx-auto px-4 justify-center">
-                    <Image 
-                        src="/Logo-Principal.png" 
-                        alt="Logo site" 
-                        width={200} 
-                        height={200} 
-                        className="w-auto h-auto mt-10 object-contain"
-                    />
+                <Image 
+                    src="/Logo-Principal.png" 
+                    alt="Logo site" 
+                    width={200} 
+                    height={200} 
+                    className="w-auto h-auto mt-10 object-contain"
+                />
             </div>
             <div className="flex w-full justify-center">
                 <Menubar className="flex w-auto mt-5 justify-center bg-black/60 backdrop-blur-md border border-zinc-800 p-1 rounded-full px-2 gap-1">
@@ -48,5 +49,13 @@ export const NavBar = () => {
                 </Menubar>
             </div>
         </header>
+    );
+}
+
+export const NavBar = () => {
+    return (
+        <Suspense fallback={<div className="h-32 w-full" />}>
+            <NavBarContent />
+        </Suspense>
     );
 }
